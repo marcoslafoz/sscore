@@ -1,6 +1,5 @@
 package com.studentspace.sscore.controller;
 
-
 import com.studentspace.sscore.model.User;
 import com.studentspace.sscore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,22 +12,22 @@ import java.util.List;
 public class UserController {
 
 	@Autowired
-	private UserService employeeService;
+	private UserService userService;
 	
 	@PostMapping("/user")
 	public User save(@RequestBody User userObj) {
-		employeeService.save(userObj);
+		userService.save(userObj);
 		return userObj;
 	}
 	
 	@GetMapping("/user")
 	public List<User> get(){
-		return employeeService.get();
+		return userService.get();
 	}
 	
 	@GetMapping("/user/{id}")
 	public User get(@PathVariable int id) {
-		User userObj = employeeService.get(id);
+		User userObj = userService.get(id);
 		if(userObj == null) {
 			throw new RuntimeException("User not found for the Id:"+id);
 		}
@@ -37,13 +36,13 @@ public class UserController {
 	
 	@PutMapping("/user")
 	public User update(@RequestBody User employeeObj) {
-		employeeService.save(employeeObj);
+		userService.save(employeeObj);
 		return employeeObj;
 	}
 	
 	@DeleteMapping("/user/{id}")
 	public String delete(@PathVariable int id) {
-		employeeService.delete(id);
+		userService.delete(id);
 		return "User has been deleted with id:"+id;
 	}
 }
