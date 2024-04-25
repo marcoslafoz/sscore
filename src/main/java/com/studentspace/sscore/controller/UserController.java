@@ -3,10 +3,14 @@ package com.studentspace.sscore.controller;
 import com.studentspace.sscore.model.User;
 import com.studentspace.sscore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 
 import java.util.List;
 
+@Controller
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -44,5 +48,10 @@ public class UserController {
 	public String delete(@PathVariable int id) {
 		userService.delete(id);
 		return "User has been deleted with id:"+id;
+	}
+
+	@QueryMapping
+	public User getUserById(@Argument int id) {
+		return userService.get(id);
 	}
 }
