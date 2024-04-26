@@ -1,6 +1,7 @@
 package com.studentspace.sscore.login;
 
 import com.studentspace.sscore.user.User;
+import com.studentspace.sscore.utils.PasswordEncryption;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
@@ -8,8 +9,6 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class UserLoginService {

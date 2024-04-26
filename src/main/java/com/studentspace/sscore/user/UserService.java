@@ -1,6 +1,6 @@
 package com.studentspace.sscore.user;
 
-import com.studentspace.sscore.login.PasswordEncryption;
+import com.studentspace.sscore.utils.PasswordEncryption;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;

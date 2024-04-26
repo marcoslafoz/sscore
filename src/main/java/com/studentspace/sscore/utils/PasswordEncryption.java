@@ -1,4 +1,4 @@
-package com.studentspace.sscore.login;
+package com.studentspace.sscore.utils;
 
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
