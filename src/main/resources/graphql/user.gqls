@@ -2,16 +2,16 @@ type Query {
     getUserById(id: ID): UserDto
 }
 
+type Mutation {
+    createUser(user: UserInputDto): UserDto
+}
+
 input UserInputDto {
     username: String
     name: String
     surname: String
     email: String
     password: String
-}
-
-type Mutation {
-    createUser(user: UserInputDto): UserDto
 }
 
 type UserDto {

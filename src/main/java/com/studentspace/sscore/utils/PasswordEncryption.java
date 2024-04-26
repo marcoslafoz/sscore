@@ -7,8 +7,8 @@ import java.security.SecureRandom;
 
 public class PasswordEncryption {
 
-    private static final String ENCRYPTATION_WORD = "marcos";
-    private static final BCryptPasswordEncoder ENCODER = new BCryptPasswordEncoder(12, new SecureRandom(ENCRYPTATION_WORD.getBytes()));
+    private static final String ENCRYPTION_WORD = "SECRET-ENCRYPTION_WORD";
+    private static final BCryptPasswordEncoder ENCODER = new BCryptPasswordEncoder(12, new SecureRandom(ENCRYPTION_WORD.getBytes()));
 
     public static String encryptPassword(String password){
         return ENCODER.encode(password);
