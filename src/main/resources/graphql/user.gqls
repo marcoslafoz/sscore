@@ -1,8 +1,20 @@
 type Query {
-    getUserById(id: ID): User
+    getUserById(id: ID): UserDto
 }
 
-type User {
+input UserInputDto {
+    username: String
+    name: String
+    surname: String
+    email: String
+    password: String
+}
+
+type Mutation {
+    createUser(user: UserInputDto): UserDto
+}
+
+type UserDto {
     id: ID
     username: String
     name: String
