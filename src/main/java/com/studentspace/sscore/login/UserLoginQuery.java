@@ -1,7 +1,9 @@
 package com.studentspace.sscore.login;
 
+import com.studentspace.sscore.security.JwtService;
 import com.studentspace.sscore.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,15 +12,24 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UserLoginQuery {
 
+    private final JwtService jwtService;
+
+    public UserLoginQuery(JwtService jwtService) {
+        this.jwtService = jwtService;
+    }
+
     @Autowired
     private UserLoginService userLoginService;
 
     @PostMapping("/login")
-    public boolean login(@RequestBody UserLogin loginParams) {
+    public LoginResponse login(@RequestBody UserLoginDto loginUserDto) {
 
-        User user = userLoginService.getUserByUsernameAndPassword(loginParams.getUsername(), loginParams.getPassword());
+        User user = userLoginService.getUserByUsernameAndPassword(loginUserDto.getUsername(), loginUserDto.getPassword());
 
-        return user != null;
+        String jwtToken = jwtService.generateToken(user);
+        LoginResponse loginResponse = new LoginResponse().setToken(jwtToken).setExpiresIn(jwtService.getExpirationTime());
 
+        return loginResponse;
+        //return ResponseEntity.ok(loginResponse);
     }
 }

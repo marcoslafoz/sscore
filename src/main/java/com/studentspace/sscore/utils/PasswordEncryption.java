@@ -1,6 +1,7 @@
 package com.studentspace.sscore.utils;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.security.SecureRandom;

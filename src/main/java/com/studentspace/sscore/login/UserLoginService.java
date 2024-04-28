@@ -20,7 +20,8 @@ public class UserLoginService {
     public User getUserByUsernameAndPassword(String username, String password) {
         try {
             Session currentSession = entityManager.unwrap(Session.class);
-            Query<User> query = currentSession.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class).setParameter("username", username);
+            Query<User> query = currentSession.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                    .setParameter("username", username);
 
             User user = query.getSingleResult();
 
