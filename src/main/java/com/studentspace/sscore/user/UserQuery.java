@@ -21,11 +21,12 @@ public class UserQuery {
         return userService.getUserList();
     }
 
+    //TODO: Devolver jwt token
     @MutationMapping
     public User createUser(@Argument User user) {
         boolean isCreated = userService.save(user);
         if (isCreated) return user;
-        
+
         return null;
     }
 
