@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Controller
 @RestController
@@ -42,5 +43,11 @@ public class UserLoginQuery {
 
         //return loginResponse;
         return ResponseEntity.ok(loginResponse);
+    }
+
+    @PostMapping("/test")
+    public boolean test(@RequestParam("token") String token) {
+
+       return jwtService.validateToken(token);
     }
 }
