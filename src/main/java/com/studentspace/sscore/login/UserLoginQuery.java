@@ -4,8 +4,11 @@ import com.studentspace.sscore.security.JwtService;
 import com.studentspace.sscore.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Controller
 @RestController
@@ -31,5 +34,11 @@ public class UserLoginQuery {
 
         return loginResponse;
         //return ResponseEntity.ok(loginResponse);
+    }
+
+    @PostMapping("/test")
+    public boolean test(@RequestParam("token") String token) {
+
+       return jwtService.validateToken(token);
     }
 }
