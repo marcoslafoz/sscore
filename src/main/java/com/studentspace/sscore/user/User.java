@@ -32,19 +32,14 @@ public class User implements UserDetails {
     @Column
     private String password;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override

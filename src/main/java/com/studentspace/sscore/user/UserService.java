@@ -25,6 +25,12 @@ public class UserService {
     }
 
     @Transactional
+    public User getUserById(Integer id) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        return currentSession.find(User.class, id);
+    }
+
+    @Transactional
     public boolean save(User user) {
         Session currentSession = entityManager.unwrap(Session.class);
 
