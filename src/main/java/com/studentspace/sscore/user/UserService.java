@@ -1,6 +1,6 @@
 package com.studentspace.sscore.user;
 
-import com.studentspace.sscore.utils.PasswordEncryption;
+import com.studentspace.sscore.security.PasswordEncryption;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
@@ -25,7 +25,7 @@ public class UserService {
     }
 
     @Transactional
-    public User getUserById(Integer id) {
+    public User getUserById(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.find(User.class, id);
     }

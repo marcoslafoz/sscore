@@ -76,6 +76,13 @@
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.5</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.leangen.graphql/spqr -->
+		<dependency>
+			<groupId>io.leangen.graphql</groupId>
+			<artifactId>spqr</artifactId>
+			<version>0.12.4</version>
+		</dependency>
+
 
 	</dependencies>
 

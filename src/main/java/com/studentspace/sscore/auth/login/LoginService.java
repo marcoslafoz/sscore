@@ -1,7 +1,7 @@
-package com.studentspace.sscore.login;
+package com.studentspace.sscore.auth.login;
 
 import com.studentspace.sscore.user.User;
-import com.studentspace.sscore.utils.PasswordEncryption;
+import com.studentspace.sscore.security.PasswordEncryption;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UserLoginService {
+public class LoginService {
 
     @Autowired
     private EntityManager entityManager;
@@ -25,7 +25,9 @@ public class UserLoginService {
 
             User user = query.getSingleResult();
 
-            if (PasswordEncryption.encryptPasswordMatch(password, user.getPassword())) return user;
+            if (user != null && PasswordEncryption.encryptPasswordMatch(password, user.getPassword())) {
+                return user;
+            }
 
         } catch (NoResultException e) {
             return null;
@@ -33,6 +35,7 @@ public class UserLoginService {
 
         return null;
     }
+
 
 
 }
