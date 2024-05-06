@@ -6,6 +6,8 @@ import com.studentspace.sscore.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Controller
 @RestController
@@ -15,18 +17,11 @@ public class ContextController {
     @Autowired
     private UserService userService;
 
-    private final JwtService jwtService;
-
-    public ContextController(JwtService jwtService) {
-        this.jwtService = jwtService;
-    }
-
     @PostMapping("/context")
-    public ContextDto authContext(@RequestParam("token") String token) {
-        if(jwtService.validateToken(token)){
+    public ContextDto authContext() {
 
-            Long userId = Long.parseLong(jwtService.extractUserId(token));
-            User user = userService.getUserById(userId);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            User user = (User) authentication.getPrincipal();
 
             ContextDto contextDto = new ContextDto();
 
@@ -35,9 +30,13 @@ public class ContextController {
 
             return contextDto;
 
-        }else{
-            return null;
-        }
+    }
 
+    @GetMapping("/me")
+    public User authenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        return (User) authentication.getPrincipal();
+        //return ResponseEntity.ok(currentUser);
     }
 }
