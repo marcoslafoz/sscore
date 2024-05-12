@@ -1,0 +1,45 @@
+@startuml
+
+package "com.studentspace.sscore.auth.context" {
+    class ContextController {
+        - userService: UserService
+        + authContext(): ContextDto
+    }
+
+    class ContextDto {
+        - isAuthenticated: boolean
+        - userID: Long
+        <<Getter>>
+        <<Setter>>
+    }
+}
+
+package "com.studentspace.sscore.user" {
+    class User {
+        - id: Long
+        - username: String
+        - name: String
+        - surname: String
+        - email: String
+        - password: String
+        <<Getter>>
+        <<Setter>>
+        + getAuthorities(): Collection<? extends GrantedAuthority>
+        + getUsername(): String
+        + isAccountNonExpired(): boolean
+        + isAccountNonLocked(): boolean
+        + isCredentialsNonExpired(): boolean
+        + isEnabled(): boolean
+    }
+
+    class UserService {
+        + getUserList(): List<User>
+        + getUserById(id: Long): User
+        + save(user: User): boolean
+        + getUserByUsername(username: String): Optional<User>
+    }
+}
+
+ContextController --> UserService : uses
+ContextController --> ContextDto : returns
+@enduml

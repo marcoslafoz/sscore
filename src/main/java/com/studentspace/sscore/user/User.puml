@@ -1,0 +1,45 @@
+@startuml
+
+package "com.studentspace.sscore.user" {
+    class User {
+        - id: Long
+        - username: String
+        - name: String
+        - surname: String
+        - email: String
+        - password: String
+        <<Getter>>
+        <<Setter>>
+        + getAuthorities(): Collection<? extends GrantedAuthority>
+        + getUsername(): String
+        + isAccountNonExpired(): boolean
+        + isAccountNonLocked(): boolean
+        + isCredentialsNonExpired(): boolean
+        + isEnabled(): boolean
+    }
+
+    class UserDto {
+        - id: Long
+        <<Getter>>
+        <<Setter>>
+    }
+
+    class UserQuery {
+        - userService: UserService
+        + createUser(user: User): User
+        + getUserById(id: Long): User
+    }
+
+    class UserService {
+        - entityManager: EntityManager
+        + getUserList(): List<User>
+        + getUserById(id: Long): User
+        + save(user: User): boolean
+        + getUserByUsername(username: String): Optional<User>
+    }
+}
+
+UserQuery --> UserService : uses
+UserService --> User : uses
+UserQuery --> UserDto : returns
+@enduml
