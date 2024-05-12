@@ -24,7 +24,7 @@ package "com.studentspace.sscore.user" {
         <<Setter>>
     }
 
-    class UserQuery {
+    class UserController {
         - userService: UserService
         + createUser(user: User): User
         + getUserById(id: Long): User
@@ -39,7 +39,7 @@ package "com.studentspace.sscore.user" {
     }
 }
 
-UserQuery --> UserService : uses
+UserController --> UserService : uses
 UserService --> User : uses
-UserQuery --> UserDto : returns
+UserController <-- UserDto : returns
 @enduml

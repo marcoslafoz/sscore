@@ -19,18 +19,11 @@ package "com.studentspace.sscore.academic_course" {
     }
 }
 
-package "com.studentspace.sscore.user" {
-    class User {
-        - id: Long
-        + getId(): Long
-        + setId(id: Long): void
-    }
-}
 
-AcademicCourse "1" -- "0..1" User : user
+
 
 AcademicCourseService --> AcademicCourse : uses
 AcademicCourseController --> AcademicCourseService : uses
-AcademicCourseController --> AcademicRecordDto : returns
+AcademicCourseController <-- AcademicCourse : returns
 
 @enduml

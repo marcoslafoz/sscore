@@ -42,6 +42,6 @@ package "com.studentspace.sscore.user" {
 
 LoginController --> LoginService : uses
 LoginController --> JwtService : creates
-LoginController --> LoginDto : returns
+LoginController <- LoginDto : returns
 LoginService --> User : uses
 @enduml

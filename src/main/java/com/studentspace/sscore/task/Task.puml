@@ -1,0 +1,33 @@
+@startuml
+
+package "com.studentspace.sscore.task" {
+    class TaskService {
+        -EntityManager entityManager
+        +List<Task> getTasksByUserId(Long userId)
+        +List<Task> getTasksBySubjectId(Long subjectId)
+    }
+
+    class TaskController {
+        -TaskService taskService
+        +List<Task> getTasksByUserId(Long userId)
+        +List<Task> getTasksBySubjectId(Long subjectId)
+    }
+
+    class Task {
+        -Long id
+        -String title
+        -String description
+        -Boolean checked
+        -User user
+        -Subject subject
+               <<Getter>>
+               <<Setter>>
+    }
+}
+
+TaskService --> Task : uses
+TaskController --> TaskService : uses
+TaskController <-- Task : returns
+
+
+@enduml
