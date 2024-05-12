@@ -1,4 +1,4 @@
-package com.studentspace.sscore.course;
+package com.studentspace.sscore.academic_course;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +12,14 @@ import java.util.List;
 @Controller
 @RestController
 @Transactional
-public class CourseController {
+public class AcademicCourseController {
 
     @Autowired
-    private CourseService courseService;
+    private AcademicCourseService courseService;
 
     @QueryMapping
-    public List<Course> getCourseListByUserId(@Argument Long userId) {
-        return courseService.getCourseListByUserId(userId);
+    public List<AcademicCourse> getAcademicCourseListByUserId(@Argument Long userId) {
+        return courseService.getAcademicCourseListByUserId(userId);
 
     }
 

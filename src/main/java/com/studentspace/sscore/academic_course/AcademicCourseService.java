@@ -1,4 +1,4 @@
-package com.studentspace.sscore.course;
+package com.studentspace.sscore.academic_course;
 
 import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
@@ -11,19 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CourseService {
+public class AcademicCourseService {
 
     @Autowired
     private EntityManager entityManager;
 
     @Transactional
-    public List<Course> getCourseListByUserId(Long userId) {
+    public List<AcademicCourse> getAcademicCourseListByUserId(Long userId) {
 
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Course> query = currentSession.createQuery("SELECT c FROM Course c WHERE c.user.id = :userId", Course.class);
+        Query<AcademicCourse> query = currentSession.createQuery("SELECT c FROM AcademicCourse c WHERE c.user.id = :userId", AcademicCourse.class);
         query.setParameter("userId", userId);
 
-        List<Course> courseList =  query.getResultList();
+        List<AcademicCourse> courseList =  query.getResultList();
 
         if(!courseList.isEmpty()){
             return courseList;

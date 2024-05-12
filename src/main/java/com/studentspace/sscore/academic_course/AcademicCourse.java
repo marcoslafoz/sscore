@@ -1,4 +1,4 @@
-    package com.studentspace.sscore.course;
+    package com.studentspace.sscore.academic_course;
 
     import com.studentspace.sscore.user.User;
     import jakarta.persistence.*;
@@ -8,8 +8,8 @@
     @Getter
     @Setter
     @Entity
-    @Table(name = "course", schema = "public")
-    public class Course {
+    @Table(name = "academic_course", schema = "public")
+    public class AcademicCourse {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

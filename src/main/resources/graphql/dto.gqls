@@ -1,6 +1,6 @@
 type Query {
     getUserById(id: ID): UserDto
-    getCourseListByUserId(userId: ID): [CourseDto]
+    getAcademicCourseListByUserId(userId: ID): [AcademicCourseDto]
 }
 
 type Mutation {
@@ -23,8 +23,7 @@ type UserDto {
     email: String
 }
 
-type CourseDto {
+type AcademicCourseDto {
     id: ID
     name: String
-    user_id: String
 }
