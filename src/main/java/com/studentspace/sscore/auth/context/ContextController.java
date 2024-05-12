@@ -1,6 +1,5 @@
 package com.studentspace.sscore.auth.context;
 
-import com.studentspace.sscore.security.JwtService;
 import com.studentspace.sscore.user.User;
 import com.studentspace.sscore.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,23 +19,24 @@ public class ContextController {
     @PostMapping("/context")
     public ContextDto authContext() {
 
+        ContextDto contextDto = new ContextDto();
+
+        try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             User user = (User) authentication.getPrincipal();
 
-            ContextDto contextDto = new ContextDto();
+            if (user != null) {
+                contextDto.setAuthenticated(true);
+                contextDto.setUserID(user.getId());
+            }
 
-            contextDto.setAuthenticated(true);
-            contextDto.setUserID(user.getId());
+        } catch (Exception ignored) {
+            System.out.println("--> Inicio de sesion fallido");
+        }
 
-            return contextDto;
+        return contextDto;
+
 
     }
 
-    @GetMapping("/me")
-    public User authenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        return (User) authentication.getPrincipal();
-        //return ResponseEntity.ok(currentUser);
-    }
 }
