@@ -1,5 +1,6 @@
 type Query {
     getUserById(id: ID): UserDto
+    getCourseListByUserId(userId: ID): [CourseDto]
 }
 
 type Mutation {
@@ -20,4 +21,10 @@ type UserDto {
     name: String
     surname: String
     email: String
+}
+
+type CourseDto {
+    id: ID
+    name: String
+    user_id: String
 }

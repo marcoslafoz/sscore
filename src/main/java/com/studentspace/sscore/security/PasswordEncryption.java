@@ -5,6 +5,7 @@ import java.security.SecureRandom;
 
 public class PasswordEncryption {
 
+    //TODO: Sacar a application properties
     private static final String ENCRYPTION_WORD = "SECRET-ENCRYPTION_WORD";
     private static final BCryptPasswordEncoder ENCODER = new BCryptPasswordEncoder(12, new SecureRandom(ENCRYPTION_WORD.getBytes()));
 
