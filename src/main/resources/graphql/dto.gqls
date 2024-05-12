@@ -2,6 +2,9 @@ type Query {
     getUserById(id: ID): UserDto
     getAcademicCourseListByUserId(userId: ID): [AcademicCourseDto]
     getSubjectListByAcademicCourseId(courseId: ID): [SubjectDto]
+    getTasksByUserId(userId: ID): [TaskDto]
+    getTasksBySubjectId(subjectId: ID): [TaskDto]
+
 }
 
 type Mutation {
@@ -32,4 +35,11 @@ type AcademicCourseDto {
 type SubjectDto {
     id: ID
     name: String
+}
+
+type TaskDto {
+    id: ID
+    title: String
+    description: String
+    checked: Boolean
 }
