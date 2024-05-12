@@ -18,12 +18,6 @@ package "com.studentspace.sscore.user" {
         + isEnabled(): boolean
     }
 
-    class UserDto {
-        - id: Long
-        <<Getter>>
-        <<Setter>>
-    }
-
     class UserController {
         - userService: UserService
         + createUser(user: User): User
@@ -41,5 +35,5 @@ package "com.studentspace.sscore.user" {
 
 UserController --> UserService : uses
 UserService --> User : uses
-UserController <-- UserDto : returns
+UserController <-- User : returns
 @enduml
