@@ -1,0 +1,76 @@
+CREATE DATABASE studentspacedb
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Spanish_Spain.1252'
+    LC_CTYPE = 'Spanish_Spain.1252'
+    LOCALE_PROVIDER = 'libc'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+
+CREATE SCHEMA public AUTHORIZATION pg_database_owner;
+
+CREATE TABLE public."user" (
+	id serial4 NOT NULL,
+	username varchar(50) NOT NULL,
+	"name" varchar(100) DEFAULT NULL::character varying NOT NULL,
+	surname varchar(100) DEFAULT NULL::character varying NULL,
+	email varchar(100) DEFAULT NULL::character varying NOT NULL,
+	"password" varchar(100) NOT NULL,
+	CONSTRAINT user_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE public.academic_course (
+	id int4 DEFAULT nextval('course_id_seq'::regclass) NOT NULL,
+	"name" varchar(255) NOT NULL,
+	user_id int4 NOT NULL,
+	CONSTRAINT course_pkey PRIMARY KEY (id),
+	CONSTRAINT course_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
+);
+
+CREATE TABLE public.subject (
+	id serial4 NOT NULL,
+	"name" varchar(255) NOT NULL,
+	academic_course_id int4 NOT NULL,
+	CONSTRAINT subject_pkey PRIMARY KEY (id),
+	CONSTRAINT subject_academic_course_id_fkey FOREIGN KEY (academic_course_id) REFERENCES public.academic_course(id)
+);
+
+CREATE TABLE public.task (
+	id serial4 NOT NULL,
+	user_id int4 NOT NULL,
+	subject_id int4 NULL,
+	title varchar NOT NULL,
+	description varchar NULL,
+	checked bool DEFAULT false NULL,
+	CONSTRAINT task_pkey PRIMARY KEY (id),
+	CONSTRAINT task_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id),
+	CONSTRAINT task_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
+);
+
+CREATE TABLE public."document" (
+	id serial4 NOT NULL,
+	user_id int4 NOT NULL,
+	subject_id int4 NULL,
+	CONSTRAINT document_pkey PRIMARY KEY (id),
+	CONSTRAINT document_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id),
+	CONSTRAINT document_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
+);
+
+CREATE TABLE public."event" (
+	id serial4 NOT NULL,
+	user_id int4 NOT NULL,
+	subject_id int4 NULL,
+	CONSTRAINT event_pkey PRIMARY KEY (id),
+	CONSTRAINT event_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id),
+	CONSTRAINT event_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
+);
+
+CREATE TABLE public.exam (
+	id serial4 NOT NULL,
+	subject_id int4 NOT NULL,
+	CONSTRAINT exam_pkey PRIMARY KEY (id),
+	CONSTRAINT exam_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id)
+);

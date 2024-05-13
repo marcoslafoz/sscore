@@ -36,7 +36,6 @@ package "com.studentspace.sscore.security" {
 }
 
 ApplicationConfiguration --> UserService : uses
-JwtAuthenticationFilter --> HandlerExceptionResolver : uses
 JwtAuthenticationFilter --> JwtService : uses
 JwtAuthenticationFilter --> UserDetailsService : uses
 JwtAuthenticationFilter --> UserService : uses
