@@ -19,6 +19,9 @@
         @Column
         private String name;
 
+        @Column(name = "color")
+        private String color;
+
         @ManyToOne
         @JoinColumn(name = "user_id")
         private User user;
