@@ -1,6 +1,6 @@
 package com.studentspace.sscore.auth.login;
 
-import com.studentspace.sscore.user.User;
+import com.studentspace.sscore.domain.user.User;
 import com.studentspace.sscore.security.PasswordEncryption;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;

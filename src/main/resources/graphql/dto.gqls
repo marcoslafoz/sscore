@@ -4,6 +4,7 @@ type Query {
     getAcademicCourseListByUserId(userId: ID): [AcademicCourseDto]
 
     getSubjectListByAcademicCourseId(courseId: ID): [SubjectDto]
+    getSubjectListByUserId(userId: ID): [SubjectDto]
 
     getTasksByUserId(userId: ID): [TaskDto]
     getTasksBySubjectId(subjectId: ID): [TaskDto]
@@ -12,7 +13,9 @@ type Query {
 
 type Mutation {
     createUser(user: UserInputDto): UserDto
+
     setTaskChecked(taskId: ID, checked: Boolean): Boolean
+    addTask(userId: ID, task: InputTaskDto): Boolean
 }
 
 input UserInputDto {
@@ -51,4 +54,27 @@ type TaskDto {
     academicCourse: AcademicCourseDto
     subject: SubjectDto
     date: String
+
+}
+
+input InputTaskDto {
+    id: ID
+    title: String
+    description: String
+    checked: Boolean
+    date: String
+    academicCourse: InputAcademicCourseDto
+    subject: InputSubjectDto
+}
+
+input InputAcademicCourseDto {
+    id: ID
+    name: String
+    color: String
+}
+
+input InputSubjectDto {
+    id: ID
+    name: String
+    color: String
 }

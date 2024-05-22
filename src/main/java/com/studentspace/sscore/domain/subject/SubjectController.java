@@ -1,4 +1,4 @@
-package com.studentspace.sscore.subject;
+package com.studentspace.sscore.domain.subject;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,11 @@ public class SubjectController {
     @QueryMapping
     public List<Subject> getSubjectListByAcademicCourseId(@Argument Long courseId) {
         return courseService.getSubjectListByAcademicCourseId(courseId);
+    }
+
+    @QueryMapping
+    public List<Subject> getSubjectListByUserId(@Argument Long userId) {
+        return courseService.getSubjectListByUserId(userId);
     }
 
 }

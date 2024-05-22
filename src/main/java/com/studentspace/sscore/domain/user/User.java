@@ -1,4 +1,4 @@
-package com.studentspace.sscore.user;
+package com.studentspace.sscore.domain.user;
 
 import jakarta.persistence.*;
 import lombok.Getter;

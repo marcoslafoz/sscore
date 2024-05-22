@@ -1,4 +1,4 @@
-package com.studentspace.sscore.user;
+package com.studentspace.sscore.domain.user;
 
 import com.studentspace.sscore.security.PasswordEncryption;
 import jakarta.persistence.EntityManager;
@@ -16,6 +16,24 @@ public class UserService {
 
     @Autowired
     private EntityManager entityManager;
+
+    public void update(User user) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.merge(user);
+    }
+
+    @Transactional
+    public User load(Long id) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        return currentSession.find(User.class, id);
+    }
+
+    @Transactional
+    public void create(User user) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.persist(user);
+    }
+
 
     @Transactional
     public List<User> getUserList() {

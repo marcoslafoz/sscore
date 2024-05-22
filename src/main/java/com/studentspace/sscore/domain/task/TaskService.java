@@ -1,6 +1,5 @@
-package com.studentspace.sscore.task;
+package com.studentspace.sscore.domain.task;
 
-import com.studentspace.sscore.user.User;
 import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -29,6 +28,12 @@ public class TaskService {
     }
 
     @Transactional
+    public void create(Task task) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.persist(task);
+    }
+
+    @Transactional
     public List<Task> getTasksByUserId(Long userId) {
         Session currentSession = entityManager.unwrap(Session.class);
         Query<Task> query = currentSession.createQuery("SELECT t FROM Task t WHERE t.user.id = :userId "
@@ -40,7 +45,8 @@ public class TaskService {
     @Transactional
     public List<Task> getTasksBySubjectId(Long subjectId) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Task> query = currentSession.createQuery("SELECT t FROM Task t WHERE t.subject.id = :subjectId", Task.class);
+        Query<Task> query = currentSession.createQuery("SELECT t FROM Task t WHERE t.subject.id = :subjectId "
+                + "ORDER BY t.checked ASC, t.date ASC", Task.class);
         query.setParameter("subjectId", subjectId);
         return query.getResultList();
     }
@@ -48,7 +54,8 @@ public class TaskService {
     @Transactional
     public List<Task> getTasksByAcademicCourseId(Long academicCourseId) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Task> query = currentSession.createQuery("SELECT t FROM Task t WHERE t.academicCourse.id = :academicCourseId ", Task.class);
+        Query<Task> query = currentSession.createQuery("SELECT t FROM Task t WHERE t.academicCourse.id = :academicCourseId "
+                + "ORDER BY t.checked ASC, t.date ASC", Task.class);
         query.setParameter("academicCourseId", academicCourseId);
         return query.getResultList();
     }

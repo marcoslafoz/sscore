@@ -1,5 +1,6 @@
-package com.studentspace.sscore.academic_course;
+package com.studentspace.sscore.domain.academic_course;
 
+import com.studentspace.sscore.domain.subject.Subject;
 import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -15,6 +16,24 @@ public class AcademicCourseService {
 
     @Autowired
     private EntityManager entityManager;
+
+    @Transactional
+    public void update(AcademicCourse academicCourse) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.merge(academicCourse);
+    }
+
+    @Transactional
+    public AcademicCourse load(Long id) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        return currentSession.find(AcademicCourse.class, id);
+    }
+
+    @Transactional
+    public void create(AcademicCourse academicCourse) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.persist(academicCourse);
+    }
 
     @Transactional
     public List<AcademicCourse> getAcademicCourseListByUserId(Long userId) {

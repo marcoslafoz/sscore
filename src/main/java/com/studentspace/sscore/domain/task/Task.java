@@ -1,8 +1,8 @@
-    package com.studentspace.sscore.task;
+    package com.studentspace.sscore.domain.task;
 
-    import com.studentspace.sscore.academic_course.AcademicCourse;
-    import com.studentspace.sscore.subject.Subject;
-    import com.studentspace.sscore.user.User;
+    import com.studentspace.sscore.domain.academic_course.AcademicCourse;
+    import com.studentspace.sscore.domain.subject.Subject;
+    import com.studentspace.sscore.domain.user.User;
     import jakarta.persistence.*;
     import lombok.Getter;
     import lombok.Setter;
