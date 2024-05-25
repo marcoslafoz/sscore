@@ -16,6 +16,11 @@ type Mutation {
 
     setTaskChecked(taskId: ID, checked: Boolean): Boolean
     addTask(userId: ID, task: InputTaskDto): Boolean
+    editTask(task: InputTaskDto): Boolean
+    removeTask(taskId: ID): Boolean
+    removeTaskSubject(taskId: ID, subjectId: ID): Boolean
+    removeTaskAcademicCourse(taskId: ID, academicCourseId: ID): Boolean
+    removeCheckedTasks(userId: ID): Int
 }
 
 input UserInputDto {
@@ -44,6 +49,7 @@ type SubjectDto {
     id: ID
     name: String
     color: String
+    academicCourse: AcademicCourseDto
 }
 
 type TaskDto {

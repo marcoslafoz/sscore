@@ -34,6 +34,15 @@ public class TaskService {
     }
 
     @Transactional
+    public void remove(Long id) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Task taskToDelete = currentSession.get(Task.class, id);
+        if (taskToDelete != null) {
+            currentSession.remove(taskToDelete);
+        }
+    }
+
+    @Transactional
     public List<Task> getTasksByUserId(Long userId) {
         Session currentSession = entityManager.unwrap(Session.class);
         Query<Task> query = currentSession.createQuery("SELECT t FROM Task t WHERE t.user.id = :userId "
@@ -58,6 +67,14 @@ public class TaskService {
                 + "ORDER BY t.checked ASC, t.date ASC", Task.class);
         query.setParameter("academicCourseId", academicCourseId);
         return query.getResultList();
+    }
+
+    @Transactional
+    public int deleteTasksByUserIdAndChecked(Long userId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query query = currentSession.createQuery("DELETE FROM Task WHERE user.id = :userId AND checked = true");
+        query.setParameter("userId", userId);
+        return query.executeUpdate();
     }
 
 
