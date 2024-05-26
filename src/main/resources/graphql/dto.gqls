@@ -9,6 +9,10 @@ type Query {
     getTasksByUserId(userId: ID): [TaskDto]
     getTasksBySubjectId(subjectId: ID): [TaskDto]
     getTasksByAcademicCourseId(academicCourseId: ID): [TaskDto]
+
+    getDocumentListByUserId(userId: ID): [DocumentDto]
+    getDocumentsBySubjectId(subjectId: ID): [DocumentDto]
+    getDocumentsByAcademicCourseId(academicCourseId: ID): [DocumentDto]
 }
 
 type Mutation {
@@ -50,6 +54,14 @@ type SubjectDto {
     name: String
     color: String
     academicCourse: AcademicCourseDto
+}
+
+type DocumentDto {
+    id: ID
+    title: String
+    body: String
+    academicCourse: AcademicCourseDto
+    subject: SubjectDto
 }
 
 type TaskDto {
