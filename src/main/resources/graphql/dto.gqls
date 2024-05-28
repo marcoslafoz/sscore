@@ -13,6 +13,7 @@ type Query {
     getDocumentListByUserId(userId: ID): [DocumentDto]
     getDocumentsBySubjectId(subjectId: ID): [DocumentDto]
     getDocumentsByAcademicCourseId(academicCourseId: ID): [DocumentDto]
+    getDocument(documentId: ID, userId: ID): DocumentDto
 }
 
 type Mutation {
@@ -25,6 +26,8 @@ type Mutation {
     removeTaskSubject(taskId: ID, subjectId: ID): Boolean
     removeTaskAcademicCourse(taskId: ID, academicCourseId: ID): Boolean
     removeCheckedTasks(userId: ID): Int
+
+    editDocumentBody(documentId: ID, body: String) : Boolean
 }
 
 input UserInputDto {

@@ -89,6 +89,12 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>6.2.4</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-resource-server</artifactId>
+			<version>5.5.0</version> <!-- La versión puede variar -->
+		</dependency>
+
 	</dependencies>
 
 	<build>

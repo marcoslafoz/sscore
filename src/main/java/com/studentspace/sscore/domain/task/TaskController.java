@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -80,8 +81,13 @@ public class TaskController {
         if (task.getDescription() != null) newTask.setDescription(task.getDescription());
 
         if (task.getDate() != null) {
-            ZonedDateTime zonedDateTime = ZonedDateTime.parse(task.getDate().toString(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-            newTask.setDate(zonedDateTime);
+            try {
+                ZonedDateTime zonedDateTime = ZonedDateTime.parse(task.getDate().toString(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+                newTask.setDate(zonedDateTime);
+            } catch (DateTimeParseException e) {
+
+                return false;
+            }
         }
 
         if (task.getAcademicCourse() != null && task.getAcademicCourse().getId() != null && task.getAcademicCourse().getId() != 0) {
