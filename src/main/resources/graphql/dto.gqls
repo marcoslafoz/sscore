@@ -28,6 +28,11 @@ type Mutation {
     removeCheckedTasks(userId: ID): Int
 
     editDocumentBody(documentId: ID, body: String) : Boolean
+
+    removeAcademicCourseFromObject(objectType: String, objectId: ID): Boolean
+    removeSubjectFromObject(objectType: String, objectId: ID): Boolean
+    addAcademicCourseToObject(objectType: String, objectId: ID, academicCourseId: ID): Boolean
+    addSubjectToObject(objectType: String, objectId: ID, subjectId: ID): Boolean
 }
 
 input UserInputDto {
