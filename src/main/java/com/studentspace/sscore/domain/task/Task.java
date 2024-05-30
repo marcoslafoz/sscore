@@ -1,6 +1,6 @@
     package com.studentspace.sscore.domain.task;
 
-    import com.studentspace.sscore.domain.academic_course.AcademicCourse;
+    import com.studentspace.sscore.domain.course.Course;
     import com.studentspace.sscore.domain.subject.Subject;
     import com.studentspace.sscore.domain.user.User;
     import jakarta.persistence.*;
@@ -37,10 +37,10 @@
         private User user;
 
         @ManyToOne
-        @JoinColumn(name = "subject_id")
-        private Subject subject;
+        @JoinColumn(name="course_id")
+        private Course course;
 
         @ManyToOne
-        @JoinColumn(name="academic_course_id")
-        private AcademicCourse academicCourse;
+        @JoinColumn(name="subject_id")
+        private Subject subject;
     }

@@ -34,7 +34,7 @@ public class TaskService {
     }
 
     @Transactional
-    public void remove(Long id) {
+    public void delete(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
         Task taskToDelete = currentSession.get(Task.class, id);
         if (taskToDelete != null) {
@@ -48,24 +48,6 @@ public class TaskService {
         Query<Task> query = currentSession.createQuery("SELECT t FROM Task t WHERE t.user.id = :userId "
                 + "ORDER BY t.checked ASC, t.date ASC", Task.class);
         query.setParameter("userId", userId);
-        return query.getResultList();
-    }
-
-    @Transactional
-    public List<Task> getTasksBySubjectId(Long subjectId) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        Query<Task> query = currentSession.createQuery("SELECT t FROM Task t WHERE t.subject.id = :subjectId "
-                + "ORDER BY t.checked ASC, t.date ASC", Task.class);
-        query.setParameter("subjectId", subjectId);
-        return query.getResultList();
-    }
-
-    @Transactional
-    public List<Task> getTasksByAcademicCourseId(Long academicCourseId) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        Query<Task> query = currentSession.createQuery("SELECT t FROM Task t WHERE t.academicCourse.id = :academicCourseId "
-                + "ORDER BY t.checked ASC, t.date ASC", Task.class);
-        query.setParameter("academicCourseId", academicCourseId);
         return query.getResultList();
     }
 

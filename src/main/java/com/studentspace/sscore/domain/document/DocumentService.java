@@ -34,12 +34,10 @@ public class DocumentService {
     }
 
     @Transactional
-    public void remove(Long id) {
+    public void delete(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
         Document documentToDelete = currentSession.get(Document.class, id);
-        if (documentToDelete != null) {
-            currentSession.remove(documentToDelete);
-        }
+        if (documentToDelete != null) currentSession.remove(documentToDelete);
     }
 
     @Transactional
@@ -47,22 +45,6 @@ public class DocumentService {
         Session currentSession = entityManager.unwrap(Session.class);
         Query<Document> query = currentSession.createQuery("SELECT d FROM Document d WHERE d.user.id = :userId ", Document.class);
         query.setParameter("userId", userId);
-        return query.getResultList();
-    }
-
-    @Transactional
-    public List<Document> getDocumentsBySubjectId(Long subjectId) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        Query<Document> query = currentSession.createQuery("SELECT d FROM Document d WHERE d.subject.id = :subjectId ", Document.class);
-        query.setParameter("subjectId", subjectId);
-        return query.getResultList();
-    }
-
-    @Transactional
-    public List<Document> getDocumentsByAcademicCourseId(Long academicCourseId) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        Query<Document> query = currentSession.createQuery("SELECT d FROM Document d WHERE d.academicCourse.id = :academicCourseId ", Document.class);
-        query.setParameter("academicCourseId", academicCourseId);
         return query.getResultList();
     }
 

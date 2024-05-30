@@ -1,4 +1,4 @@
-package com.studentspace.sscore.domain.subject;
+package com.studentspace.sscore.domain.course;
 
 import com.studentspace.sscore.domain.document.Document;
 import jakarta.persistence.EntityManager;
@@ -12,34 +12,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class SubjectService {
+public class CourseService {
 
     @Autowired
     private EntityManager entityManager;
 
     @Transactional
-    public void update(Subject subject) {
+    public void update(Course course) {
         Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.merge(subject);
+        currentSession.merge(course);
     }
 
     @Transactional
-    public Subject load(Long id) {
+    public Course load(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
-        return currentSession.find(Subject.class, id);
+        return currentSession.find(Course.class, id);
     }
 
     @Transactional
-    public void create(Subject subject) {
+    public void create(Course course) {
         Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.persist(subject);
+        currentSession.persist(course);
     }
 
     @Transactional
     public void delete(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Subject subjectToDelete = currentSession.get(Subject.class, id);
-        if (subjectToDelete != null) currentSession.remove(subjectToDelete);
+        Course courseToDelete = currentSession.get(Course.class, id);
+        if (courseToDelete != null) currentSession.remove(courseToDelete);
     }
 
 }

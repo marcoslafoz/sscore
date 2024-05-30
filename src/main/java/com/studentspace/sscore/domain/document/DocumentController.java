@@ -25,22 +25,12 @@ public class DocumentController {
     private JwtService jwtService;
 
     @QueryMapping
-    public List<Document> getDocumentListByUserId(@Argument Long userId) {
+    public List<Document> documentGetListByUser(@Argument Long userId) {
         return documentService.getDocumentsByUserId(userId);
     }
 
     @QueryMapping
-    public List<Document> getDocumentsBySubjectId(@Argument Long subjectId) {
-        return documentService.getDocumentsBySubjectId(subjectId);
-    }
-
-    @QueryMapping
-    public List<Document> getDocumentsByAcademicCourseId(@Argument Long academicCourseId) {
-        return documentService.getDocumentsByAcademicCourseId(academicCourseId);
-    }
-
-    @QueryMapping
-    public Document getDocument(@Argument Long documentId, @Argument Long userId){
+    public Document documentRead(@Argument Long documentId, @Argument Long userId){
 
         Document document = documentService.load(documentId);
         if(Objects.equals(document.getUser().getId(), userId)) return document;
@@ -48,7 +38,7 @@ public class DocumentController {
     }
 
     @MutationMapping
-    public boolean editDocumentBody(@Argument Long documentId, @Argument String body){
+    public boolean documentEditBody(@Argument Long documentId, @Argument String body){
 
         Document document = documentService.load(documentId);
 

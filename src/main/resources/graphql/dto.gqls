@@ -1,46 +1,24 @@
 type Query {
-    getUserById(id: ID): UserDto
+    userRead(userId: ID): UserDto
 
-    getAcademicCourseListByUserId(userId: ID): [AcademicCourseDto]
+    documentRead(documentId: ID, userId: ID): DocumentDto
+    documentGetListByUser(userId: ID): [DocumentDto]
 
-    getSubjectListByAcademicCourseId(courseId: ID): [SubjectDto]
-    getSubjectListByUserId(userId: ID): [SubjectDto]
-
-    getTasksByUserId(userId: ID): [TaskDto]
-    getTasksBySubjectId(subjectId: ID): [TaskDto]
-    getTasksByAcademicCourseId(academicCourseId: ID): [TaskDto]
-
-    getDocumentListByUserId(userId: ID): [DocumentDto]
-    getDocumentsBySubjectId(subjectId: ID): [DocumentDto]
-    getDocumentsByAcademicCourseId(academicCourseId: ID): [DocumentDto]
-    getDocument(documentId: ID, userId: ID): DocumentDto
+    taskGetListByUser(userId: ID): [TaskDto]
 }
 
 type Mutation {
-    createUser(user: UserInputDto): UserDto
+    userCreate(user: InputUserDto): UserDto
 
-    setTaskChecked(taskId: ID, checked: Boolean): Boolean
-    addTask(userId: ID, task: InputTaskDto): Boolean
-    editTask(task: InputTaskDto): Boolean
-    removeTask(taskId: ID): Boolean
-    removeTaskSubject(taskId: ID, subjectId: ID): Boolean
-    removeTaskAcademicCourse(taskId: ID, academicCourseId: ID): Boolean
-    removeCheckedTasks(userId: ID): Int
+    documentEditBody(documentId: ID, body: String) : Boolean
 
-    editDocumentBody(documentId: ID, body: String) : Boolean
+    taskDeleteCheckedList(userId: ID): Int
+    taskDelete(taskId: ID): Boolean
+    taskEdit(task: InputTaskDto): Boolean
+    taskAdd(userId: ID, task: InputTaskDto): Boolean
+    taskSetChecked(taskId: ID, checked: Boolean): Boolean
 
-    removeAcademicCourseFromObject(objectType: String, objectId: ID): Boolean
-    removeSubjectFromObject(objectType: String, objectId: ID): Boolean
-    addAcademicCourseToObject(objectType: String, objectId: ID, academicCourseId: ID): Boolean
-    addSubjectToObject(objectType: String, objectId: ID, subjectId: ID): Boolean
-}
 
-input UserInputDto {
-    username: String
-    name: String
-    surname: String
-    email: String
-    password: String
 }
 
 type UserDto {
@@ -51,25 +29,32 @@ type UserDto {
     email: String
 }
 
-type AcademicCourseDto {
+input InputUserDto {
+    username: String
+    name: String
+    surname: String
+    email: String
+    password: String
+}
+
+type CourseDto {
     id: ID
     name: String
     color: String
+    subjects: [SubjectDto]
 }
 
 type SubjectDto {
     id: ID
     name: String
     color: String
-    academicCourse: AcademicCourseDto
 }
 
 type DocumentDto {
     id: ID
     title: String
     body: String
-    academicCourse: AcademicCourseDto
-    subject: SubjectDto
+    course: CourseDto
 }
 
 type TaskDto {
@@ -77,10 +62,9 @@ type TaskDto {
     title: String
     description: String
     checked: Boolean
-    academicCourse: AcademicCourseDto
-    subject: SubjectDto
     date: String
-
+    course: CourseDto
+    subject: SubjectDto
 }
 
 input InputTaskDto {
@@ -89,11 +73,10 @@ input InputTaskDto {
     description: String
     checked: Boolean
     date: String
-    academicCourse: InputAcademicCourseDto
-    subject: InputSubjectDto
+    course: InputCourseDto
 }
 
-input InputAcademicCourseDto {
+input InputCourseDto {
     id: ID
     name: String
     color: String

@@ -17,7 +17,7 @@ public class UserController {
     private UserService userService;
 
     @MutationMapping
-    public User createUser(@Argument User user) {
+    public User userCreate(@Argument User user) {
         boolean isCreated = userService.save(user);
         if (isCreated) return user;
         
@@ -25,8 +25,8 @@ public class UserController {
     }
 
     @QueryMapping
-    public User getUserById(@Argument Long id){
-        return userService.getUserById(id);
+    public User userRead(@Argument Long userId){
+        return userService.getUserById(userId);
     }
 
 

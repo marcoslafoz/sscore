@@ -15,16 +15,6 @@ import java.util.List;
 public class SubjectController {
 
     @Autowired
-    private SubjectService courseService;
-
-    @QueryMapping
-    public List<Subject> getSubjectListByAcademicCourseId(@Argument Long courseId) {
-        return courseService.getSubjectListByAcademicCourseId(courseId);
-    }
-
-    @QueryMapping
-    public List<Subject> getSubjectListByUserId(@Argument Long userId) {
-        return courseService.getSubjectListByUserId(userId);
-    }
+    private SubjectService subjectService;
 
 }

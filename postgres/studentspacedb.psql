@@ -12,6 +12,12 @@ CREATE DATABASE studentspacedb
 
 CREATE SCHEMA public AUTHORIZATION pg_database_owner;
 
+-- public."user" definition
+
+-- Drop table
+
+-- DROP TABLE public."user";
+
 CREATE TABLE public."user" (
 	id serial4 NOT NULL,
 	username varchar(50) NOT NULL,
@@ -22,55 +28,74 @@ CREATE TABLE public."user" (
 	CONSTRAINT user_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE public.academic_course (
-	id int4 DEFAULT nextval('course_id_seq'::regclass) NOT NULL,
+
+-- public.course definition
+
+-- Drop table
+
+-- DROP TABLE public.course;
+
+CREATE TABLE public.course (
+	id serial4 NOT NULL,
 	"name" varchar(255) NOT NULL,
 	user_id int4 NOT NULL,
+	color varchar(10) NULL,
 	CONSTRAINT course_pkey PRIMARY KEY (id),
 	CONSTRAINT course_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
 );
 
-CREATE TABLE public.subject (
-	id serial4 NOT NULL,
-	"name" varchar(255) NOT NULL,
-	academic_course_id int4 NOT NULL,
-	CONSTRAINT subject_pkey PRIMARY KEY (id),
-	CONSTRAINT subject_academic_course_id_fkey FOREIGN KEY (academic_course_id) REFERENCES public.academic_course(id)
-);
 
-CREATE TABLE public.task (
-	id serial4 NOT NULL,
-	user_id int4 NOT NULL,
-	subject_id int4 NULL,
-	title varchar NOT NULL,
-	description varchar NULL,
-	checked bool DEFAULT false NULL,
-	CONSTRAINT task_pkey PRIMARY KEY (id),
-	CONSTRAINT task_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id),
-	CONSTRAINT task_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
-);
+-- public."document" definition
+
+-- Drop table
+
+-- DROP TABLE public."document";
 
 CREATE TABLE public."document" (
 	id serial4 NOT NULL,
 	user_id int4 NOT NULL,
-	subject_id int4 NULL,
+	course_id int4 NULL,
+	title varchar NOT NULL,
+	body varchar NULL,
 	CONSTRAINT document_pkey PRIMARY KEY (id),
-	CONSTRAINT document_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id),
+	CONSTRAINT document_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.course(id),
 	CONSTRAINT document_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
 );
 
-CREATE TABLE public."event" (
+
+-- public.subject definition
+
+-- Drop table
+
+-- DROP TABLE public.subject;
+
+CREATE TABLE public.subject (
 	id serial4 NOT NULL,
+	"name" varchar(255) NOT NULL,
+	course_id int4 NOT NULL,
+	color varchar(10) NULL,
 	user_id int4 NOT NULL,
-	subject_id int4 NULL,
-	CONSTRAINT event_pkey PRIMARY KEY (id),
-	CONSTRAINT event_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id),
-	CONSTRAINT event_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
+	CONSTRAINT subject_pkey PRIMARY KEY (id),
+	CONSTRAINT subject_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.course(id),
+	CONSTRAINT subject_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
 );
 
-CREATE TABLE public.exam (
+
+-- public.task definition
+
+-- Drop table
+
+-- DROP TABLE public.task;
+
+CREATE TABLE public.task (
 	id serial4 NOT NULL,
-	subject_id int4 NOT NULL,
-	CONSTRAINT exam_pkey PRIMARY KEY (id),
-	CONSTRAINT exam_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id)
+	user_id int4 NOT NULL,
+	title varchar NOT NULL,
+	description varchar NULL,
+	checked bool DEFAULT false NULL,
+	course_id int4 NULL,
+	"date" timestamptz NULL,
+	CONSTRAINT task_pkey PRIMARY KEY (id),
+	CONSTRAINT task_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.course(id),
+	CONSTRAINT task_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
 );

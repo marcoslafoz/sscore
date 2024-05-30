@@ -1,33 +1,34 @@
-package com.studentspace.sscore.domain.subject;
+package com.studentspace.sscore.domain.course;
 
-import com.studentspace.sscore.domain.course.Course;
+import com.studentspace.sscore.domain.subject.Subject;
 import com.studentspace.sscore.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "subject", schema = "public")
-public class Subject {
+@Table(name = "course", schema = "public")
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
 
-    @Column(name = "name")
+    @Column
     private String name;
 
     @Column(name = "color")
     private String color;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
-
-    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Subject> subjects;
 }

@@ -1,5 +1,6 @@
 package com.studentspace.sscore.domain.user;
 
+import com.studentspace.sscore.domain.task.Task;
 import com.studentspace.sscore.security.PasswordEncryption;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -34,13 +35,15 @@ public class UserService {
         currentSession.persist(user);
     }
 
-
     @Transactional
-    public List<User> getUserList() {
+    public void delete(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<User> query = currentSession.createQuery("from User", User.class);
-        return query.getResultList();
+        Task userToDelete = currentSession.get(Task.class, id);
+        if (userToDelete != null) {
+            currentSession.remove(userToDelete);
+        }
     }
+
 
     @Transactional
     public User getUserById(Long id) {
