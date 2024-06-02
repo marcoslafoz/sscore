@@ -5,6 +5,11 @@ type Query {
     documentGetListByUser(userId: ID): [DocumentDto]
 
     taskGetListByUser(userId: ID): [TaskDto]
+
+    courseGetListByUser(userId: ID): [CourseDto]
+    courseRead(courseId: ID, userId: ID): CourseDto
+
+    subjectRead(subjectId: ID, userId: ID): SubjectDto
 }
 
 type Mutation {
@@ -18,7 +23,13 @@ type Mutation {
     taskAdd(userId: ID, task: InputTaskDto): Boolean
     taskSetChecked(taskId: ID, checked: Boolean): Boolean
 
+    courseEdit(course: InputCourseDto): Boolean
+    courseAdd(userId: ID, course: InputCourseDto): Boolean
+    courseDelete(courseId: ID): Boolean
 
+    subjectEdit(subject: InputSubjectDto): Boolean
+    subjectAdd(courseId: ID, subject: InputSubjectDto): Boolean
+    subjectDelete(subjectId: ID): Boolean
 }
 
 type UserDto {

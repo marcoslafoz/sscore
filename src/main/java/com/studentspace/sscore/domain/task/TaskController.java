@@ -30,6 +30,9 @@ public class TaskController {
     private TaskService taskService;
 
     @Autowired
+    private CourseService courseService;
+
+    @Autowired
     private UserService userService;
 
     @QueryMapping
@@ -71,6 +74,8 @@ public class TaskController {
             }
         }
 
+        if(task.getCourse().getId() != null) newTask.setCourse(courseService.load(task.getCourse().getId()));
+
         taskService.create(newTask);
 
         return true;
@@ -92,6 +97,8 @@ public class TaskController {
         }else{
             updatedTask.setDate(null);
         }
+
+        if(task.getCourse().getId() != null) updatedTask.setCourse(courseService.load(task.getCourse().getId()));
 
         taskService.update(updatedTask);
         return true;

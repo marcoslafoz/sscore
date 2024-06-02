@@ -1,6 +1,7 @@
 package com.studentspace.sscore.domain.course;
 
 import com.studentspace.sscore.domain.document.Document;
+import com.studentspace.sscore.domain.task.Task;
 import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -40,6 +41,14 @@ public class CourseService {
         Session currentSession = entityManager.unwrap(Session.class);
         Course courseToDelete = currentSession.get(Course.class, id);
         if (courseToDelete != null) currentSession.remove(courseToDelete);
+    }
+
+    @Transactional
+    public List<Course> getCourseListByUser(Long userId){
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<Course> query = currentSession.createQuery("SELECT c FROM Course c WHERE c.user.id = :userId ");
+        query.setParameter("userId", userId);
+        return query.getResultList();
     }
 
 }
