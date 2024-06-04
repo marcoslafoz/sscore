@@ -5,17 +5,24 @@ type Query {
     documentGetListByUser(userId: ID): [DocumentDto]
 
     taskGetListByUser(userId: ID): [TaskDto]
+    taskGetListByCourse(courseId: ID): [TaskDto]
 
     courseGetListByUser(userId: ID): [CourseDto]
     courseRead(courseId: ID, userId: ID): CourseDto
 
     subjectRead(subjectId: ID, userId: ID): SubjectDto
+
+    scoreGetListBySubject(subjectId: ID): [ScoreDto]
+    scoreGetListByUser(userId: ID): [ScoreDto]
 }
 
 type Mutation {
     userCreate(user: InputUserDto): UserDto
 
-    documentEditBody(documentId: ID, body: String) : Boolean
+    documentEditBody(documentId: ID, body: String): Boolean
+    documentDelete(documentId: ID): Boolean
+    documentRename(documentId: ID, title: String): Boolean
+    documentCreate(userId: ID, title: String, courseId: ID, subjectId: ID): Boolean
 
     taskDeleteCheckedList(userId: ID): Int
     taskDelete(taskId: ID): Boolean
@@ -75,6 +82,15 @@ type TaskDto {
     checked: Boolean
     date: String
     course: CourseDto
+    subject: SubjectDto
+}
+
+type ScoreDto {
+    id: ID
+    name: String
+    score: Float
+    date: String
+    status: Int
     subject: SubjectDto
 }
 

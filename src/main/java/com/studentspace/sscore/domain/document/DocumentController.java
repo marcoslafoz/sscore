@@ -1,5 +1,10 @@
 package com.studentspace.sscore.domain.document;
 
+import com.studentspace.sscore.domain.course.Course;
+import com.studentspace.sscore.domain.course.CourseService;
+import com.studentspace.sscore.domain.subject.SubjectService;
+import com.studentspace.sscore.domain.user.User;
+import com.studentspace.sscore.domain.user.UserService;
 import com.studentspace.sscore.security.JwtService;
 import graphql.GraphQLException;
 import jakarta.transaction.Transactional;
@@ -22,7 +27,13 @@ public class DocumentController {
     private DocumentService documentService;
 
     @Autowired
-    private JwtService jwtService;
+    private UserService userService;
+
+    @Autowired
+    private CourseService courseService;
+
+    @Autowired
+    private SubjectService subjectService;
 
     @QueryMapping
     public List<Document> documentGetListByUser(@Argument Long userId) {
@@ -30,23 +41,54 @@ public class DocumentController {
     }
 
     @QueryMapping
-    public Document documentRead(@Argument Long documentId, @Argument Long userId){
+    public Document documentRead(@Argument Long documentId, @Argument Long userId) {
 
         Document document = documentService.load(documentId);
-        if(Objects.equals(document.getUser().getId(), userId)) return document;
+        if (Objects.equals(document.getUser().getId(), userId)) return document;
         throw new GraphQLException();
     }
 
     @MutationMapping
-    public boolean documentEditBody(@Argument Long documentId, @Argument String body){
-
+    public boolean documentEditBody(@Argument Long documentId, @Argument String body) {
         Document document = documentService.load(documentId);
-
-        if(Objects.equals(document.getBody(), body)) return true;
-
+        if (Objects.equals(document.getBody(), body)) return true;
         document.setBody(body);
         documentService.update(document);
         return true;
+    }
+
+    @MutationMapping
+    public boolean documentDelete(@Argument Long documentId) {
+        documentService.delete(documentId);
+        return true;
+    }
+
+    @MutationMapping
+    public boolean documentRename(@Argument Long documentId, @Argument String title) {
+        Document document = documentService.load(documentId);
+        if (Objects.equals(document.getTitle(), title)) return true;
+        document.setTitle(title);
+        documentService.update(document);
+        return true;
+    }
+
+    @MutationMapping
+    public boolean documentCreate(@Argument Long userId, @Argument String title, @Argument Long courseId, @Argument Long subjectId) {
+
+        User user = userService.load(userId);
+        Document newDocument = new Document();
+        newDocument.setTitle(title);
+        newDocument.setUser(user);
+
+        if (courseId != null && courseId != 0) {
+            newDocument.setCourse(courseService.load(courseId));
+            if (subjectId != null && subjectId != 0) newDocument.setSubject(subjectService.load(subjectId));
+        }
+
+        documentService.create(newDocument);
+
+        return true;
+
     }
 
 }

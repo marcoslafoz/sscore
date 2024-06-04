@@ -40,6 +40,11 @@ public class TaskController {
         return taskService.getTasksByUserId(userId);
     }
 
+    @QueryMapping
+    public List<Task> taskGetListByCourse(@Argument Long courseId) {
+        return taskService.getTasksByCourseId(courseId);
+    }
+
     @MutationMapping
     public boolean taskSetChecked(@Argument Long taskId, @Argument Boolean checked) {
         Task task = taskService.load(taskId);
@@ -51,7 +56,7 @@ public class TaskController {
     }
 
     @MutationMapping
-    public boolean taskAdd (@Argument Long userId, @Argument Task task) {
+    public boolean taskAdd(@Argument Long userId, @Argument Task task) {
 
         User user = userService.load(userId);
 
@@ -74,7 +79,7 @@ public class TaskController {
             }
         }
 
-        if(task.getCourse().getId() != null) newTask.setCourse(courseService.load(task.getCourse().getId()));
+        if (task.getCourse().getId() != null) newTask.setCourse(courseService.load(task.getCourse().getId()));
 
         taskService.create(newTask);
 
@@ -86,7 +91,7 @@ public class TaskController {
 
         Task updatedTask = taskService.load(task.getId());
 
-        if(updatedTask == null) return false;
+        if (updatedTask == null) return false;
 
         updatedTask.setTitle(task.getTitle());
         updatedTask.setDescription(task.getDescription());
@@ -94,11 +99,11 @@ public class TaskController {
         if (task.getDate() != null) {
             ZonedDateTime zonedDateTime = ZonedDateTime.parse(task.getDate().toString(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
             updatedTask.setDate(zonedDateTime);
-        }else{
+        } else {
             updatedTask.setDate(null);
         }
 
-        if(task.getCourse().getId() != null) updatedTask.setCourse(courseService.load(task.getCourse().getId()));
+        if (task.getCourse().getId() != null) updatedTask.setCourse(courseService.load(task.getCourse().getId()));
 
         taskService.update(updatedTask);
         return true;
@@ -111,7 +116,7 @@ public class TaskController {
     }
 
     @MutationMapping
-    public Integer taskDeleteCheckedList(@Argument Long userId){
+    public Integer taskDeleteCheckedList(@Argument Long userId) {
         return taskService.deleteTasksByUserIdAndChecked(userId);
     }
 }
