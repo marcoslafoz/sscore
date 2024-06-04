@@ -34,4 +34,10 @@ public class ScoreController {
         return scoreService.getScoresByUserId(userId);
     }
 
+    @MutationMapping
+    public boolean scoreDelete (@Argument Long scoreId){
+        scoreService.delete(scoreId);
+        return true;
+    }
+
 }

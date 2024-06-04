@@ -37,6 +37,8 @@ type Mutation {
     subjectEdit(subject: InputSubjectDto): Boolean
     subjectAdd(courseId: ID, subject: InputSubjectDto): Boolean
     subjectDelete(subjectId: ID): Boolean
+
+    scoreDelete(scoreId: ID): Boolean
 }
 
 type UserDto {
@@ -91,6 +93,7 @@ type ScoreDto {
     score: Float
     date: String
     status: Int
+    course: CourseDto
     subject: SubjectDto
 }
 
