@@ -14,11 +14,8 @@ public class LoginController {
     @Autowired
     private LoginService userLoginService;
 
-    private final JwtService jwtService;
-
-    public LoginController(JwtService jwtService) {
-        this.jwtService = jwtService;
-    }
+    @Autowired
+    private JwtService jwtService;
 
     @PostMapping("/login")
     public String login(@RequestBody LoginDto loginUserDto) {
