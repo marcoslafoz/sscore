@@ -32,6 +32,9 @@
         @Column(name = "status")
         private Integer status;
 
+        public static int STATUS_PASSED = 1;
+        public static int STATUS_FAILED = 2;
+
         @ManyToOne
         @JoinColumn(name="course_id")
         private Course course;

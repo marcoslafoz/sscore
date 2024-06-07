@@ -33,6 +33,9 @@ public class TaskController {
     private CourseService courseService;
 
     @Autowired
+    private SubjectService subjectService;
+
+    @Autowired
     private UserService userService;
 
     @QueryMapping

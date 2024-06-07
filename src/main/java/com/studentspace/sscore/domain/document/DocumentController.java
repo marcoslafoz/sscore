@@ -1,11 +1,9 @@
 package com.studentspace.sscore.domain.document;
 
-import com.studentspace.sscore.domain.course.Course;
 import com.studentspace.sscore.domain.course.CourseService;
 import com.studentspace.sscore.domain.subject.SubjectService;
 import com.studentspace.sscore.domain.user.User;
 import com.studentspace.sscore.domain.user.UserService;
-import com.studentspace.sscore.security.JwtService;
 import graphql.GraphQLException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

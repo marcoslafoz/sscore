@@ -39,6 +39,8 @@ type Mutation {
     subjectDelete(subjectId: ID): Boolean
 
     scoreDelete(scoreId: ID): Boolean
+    scoreAdd(userId: ID, score: InputScoreDto): Boolean
+    scoreEdit(score: InputScoreDto): Boolean
 }
 
 type UserDto {
@@ -87,6 +89,16 @@ type TaskDto {
     subject: SubjectDto
 }
 
+input InputScoreDto {
+    id: ID
+    name: String
+    status: Int
+    date: String
+    score: Float
+    course: InputCourseDto
+    subject: InputSubjectDto
+}
+
 type ScoreDto {
     id: ID
     name: String
@@ -104,6 +116,7 @@ input InputTaskDto {
     checked: Boolean
     date: String
     course: InputCourseDto
+    subject: InputSubjectDto
 }
 
 input InputCourseDto {
