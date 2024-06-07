@@ -18,6 +18,9 @@ public class UserService {
     @Autowired
     private EntityManager entityManager;
 
+    @Autowired
+    private PasswordEncryption passwordEncryption;
+
     public void update(User user) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.merge(user);
@@ -69,7 +72,7 @@ public class UserService {
         }
 
         if (existingUser == null || existingUser.getId().equals(user.getId())) {
-            String encryptedPassword = PasswordEncryption.encryptPassword(user.getPassword());
+            String encryptedPassword = passwordEncryption.encryptPassword(user.getPassword());
             user.setPassword(encryptedPassword);
             currentSession.saveOrUpdate(user);
             return true;

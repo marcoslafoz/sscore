@@ -16,6 +16,9 @@ public class LoginService {
     @Autowired
     private EntityManager entityManager;
 
+    @Autowired
+    private PasswordEncryption passwordEncryption;
+
     @Transactional
     public User getUserByUsernameAndPassword(String username, String password) {
         try {
@@ -25,7 +28,7 @@ public class LoginService {
 
             User user = query.getSingleResult();
 
-            if (user != null && PasswordEncryption.encryptPasswordMatch(password, user.getPassword())) {
+            if (user != null && passwordEncryption.encryptPasswordMatch(password, user.getPassword())) {
                 return user;
             }
 

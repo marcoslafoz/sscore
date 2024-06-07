@@ -1,21 +1,24 @@
 package com.studentspace.sscore.security;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.security.SecureRandom;
 
+@Configuration
 public class PasswordEncryption {
 
-    //TODO: Sacar a application properties
-    private static final String ENCRYPTION_WORD = "SECRET-ENCRYPTION_WORD";
-    private static final BCryptPasswordEncoder ENCODER = new BCryptPasswordEncoder(12, new SecureRandom(ENCRYPTION_WORD.getBytes()));
+    private final BCryptPasswordEncoder encoder;
 
-    public static String encryptPassword(String password){
-        return ENCODER.encode(password);
+    public PasswordEncryption(@Value("${encryption.word}") String encryptionWord) {
+        this.encoder = new BCryptPasswordEncoder(12, new SecureRandom(encryptionWord.getBytes()));
     }
 
-    public static boolean encryptPasswordMatch(String password,String encryptedPassword){
-        return ENCODER.matches(password, encryptedPassword);
+    public String encryptPassword(String password) {
+        return encoder.encode(password);
     }
 
-
+    public boolean encryptPasswordMatch(String password, String encryptedPassword) {
+        return encoder.matches(password, encryptedPassword);
+    }
 }
