@@ -39,5 +39,16 @@ public class LoginService {
         return null;
     }
 
+    @Transactional
+    public User getUserByUsername(String username) {
+
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<User> query = currentSession.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                .setParameter("username", username);
+
+        return query.getSingleResult();
+
+    }
+
 
 }

@@ -58,6 +58,7 @@ public class CourseController {
 
         Course editedCourse = courseService.load(course.getId());
         editedCourse.setName(course.getName());
+        editedCourse.setColor(course.getColor());
         courseService.update(editedCourse);
 
         return true;

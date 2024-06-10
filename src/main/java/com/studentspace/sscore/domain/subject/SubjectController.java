@@ -42,6 +42,7 @@ public class SubjectController {
 
         Subject editedSubject = subjectService.load(subject.getId());
         editedSubject.setName(subject.getName());
+        editedSubject.setColor(subject.getColor());
         subjectService.update(editedSubject);
 
         return true;

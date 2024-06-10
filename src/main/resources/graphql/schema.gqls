@@ -1,4 +1,8 @@
 type Query {
+
+    loginFindUsername(username: String): Boolean
+    login(username: String, password: String): String
+
     userRead(userId: ID): UserDto
 
     documentRead(documentId: ID, userId: ID): DocumentDto
