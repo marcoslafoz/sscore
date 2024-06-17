@@ -1,0 +1,29 @@
+@startuml
+
+package "com.studentspace.sscore.academic_course" {
+    class Course {
+        - id: Long
+        - name: String
+       <<Getter>>
+       <<Setter>>
+    }
+
+    class CourseService {
+        - entityManager: EntityManager
+        + getCourseListByUserId(userId: Long): List<Course>
+    }
+
+    class CourseController {
+        - courseService: CourseService
+        + getCourseListByUserId(userId: Long): List<Course>
+    }
+}
+
+
+
+
+CourseService --> Course : uses
+CourseController --> CourseService : uses
+CourseController <-- Course : returns
+
+@enduml

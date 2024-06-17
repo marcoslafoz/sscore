@@ -1,0 +1,23 @@
+@startuml
+actor Usuario
+
+rectangle "Gestionar recursos" {
+
+  Usuario --> (Gestionar Notas)
+  Usuario --> (Gestionar Documentos)
+
+
+
+  (Gestionar Notas) --> (Añadir Nota)
+  (Gestionar Notas) --> (Eliminar Nota)
+  (Gestionar Notas) --> (Editar Nota)
+
+ (Gestionar Documentos) --> (Añadir Documento)
+ (Gestionar Documentos) --> (Eliminar Documento)
+ (Gestionar Documentos) --> (Consultar Documento)
+ (Consultar Documento) --> (Editar documento)
+
+
+}
+
+@enduml

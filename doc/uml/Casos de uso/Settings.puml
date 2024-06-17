@@ -1,0 +1,15 @@
+@startuml
+actor Usuario
+
+rectangle "Ajustes de usuario" {
+  Usuario --> (Vista de ajustes de usuario)
+
+  (Vista de ajustes de usuario) --> (Cerrar sesión)
+   (Vista de ajustes de usuario) --> (Editar usuario)
+   (Vista de ajustes de usuario) --> (Cambiar avatar)
+   (Vista de ajustes de usuario) --> (Cambiar contraseña)
+
+
+}
+
+@enduml

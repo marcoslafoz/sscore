@@ -1,0 +1,32 @@
+@startuml
+
+package "com.studentspace.sscore.subject" {
+    class SubjectService {
+        - EntityManager entityManager
+        + List<Subject> getSubjectListByAcademicCourseId(Long courseId)
+    }
+
+    class SubjectController {
+        - SubjectService courseService
+        + List<Subject> getSubjectListByAcademicCourseId(Long courseId)
+    }
+
+    class Subject {
+        - Long id
+        - String name
+        - AcademicCourse academicCourse
+    }
+
+    SubjectService --> Subject : uses
+    SubjectController --> SubjectService : uses
+    SubjectController <-- Subject : returns
+
+}
+
+
+
+}
+
+
+
+@enduml

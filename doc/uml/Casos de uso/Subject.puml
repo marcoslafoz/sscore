@@ -1,0 +1,14 @@
+@startuml
+actor Usuario
+
+rectangle "Gestionar asignaturas" {
+  Usuario --> (Consultar todos los cursos)
+  (Consultar todos los cursos) --> (Consultar curso)
+  (Consultar curso) --> (Consultar asignatura)
+  (Consultar curso) --> (Añadir asignatura): <<extends>>
+  (Consultar asignatura) --> (Eliminar asignatura): <<extends>>
+  (Consultar asignatura) --> (Editar asignatura): <<extends>>
+
+}
+
+@enduml

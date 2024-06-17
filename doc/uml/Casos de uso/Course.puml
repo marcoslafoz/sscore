@@ -1,27 +1,13 @@
 @startuml
 actor Usuario
 
-rectangle "Gestión de Cursos / Asignatura" {
- Usuario --> (Crear/Modificar/Eliminar Curso / Asignatura)
-    (Crear/Modificar/Eliminar Curso / Asignatura) --> (Crear Curso / Asignatura)
-    (Crear/Modificar/Eliminar Curso / Asignatura) --> (Modificar Curso / Asignatura)
-    (Crear/Modificar/Eliminar Curso / Asignatura) --> (Eliminar Curso / Asignatura)
-}
+rectangle "Gestionar cursos" {
+  Usuario --> (Consultar todos los cursos)
+  (Consultar todos los cursos) --> (Consultar curso)
+  (Consultar todos los cursos) --> (Añadir curso): <<extend>>
+  (Consultar curso) --> (Editar Curso): <<extend>>
+  (Consultar curso) --> (Eliminar Curso): <<extend>>
 
-rectangle "Crear Curso / Asignatura" {
-    (Crear Curso / Asignatura) --> (Rellenar Formulario)
-    (Rellenar Formulario) --> (Guardar Cambios)
-}
-
-rectangle "Modificar Curso / Asignatura" {
-    (Modificar Curso / Asignatura) --> (Seleccionar Curso / Asignatura a Modificar)
-    (Seleccionar Curso / Asignatura a Modificar) --> (Rellenar Formulario)  : <<include>>
-    (Rellenar Formulario) --> (Guardar Cambios)
-}
-
-rectangle "Eliminar Curso / Asignatura" {
-    (Eliminar Curso / Asignatura) --> (Seleccionar Curso / Asignatura a Eliminar)
-    (Seleccionar Curso / Asignatura a Eliminar) --> (Confirmar Eliminación)
 }
 
 @enduml
