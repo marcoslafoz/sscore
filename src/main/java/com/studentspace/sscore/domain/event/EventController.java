@@ -41,12 +41,6 @@ public class EventController {
         return eventService.getEventsByUserId(userId);
     }
 
-
-
-
-
-
-
     @MutationMapping
     public boolean eventAdd(@Argument Long userId, @Argument Event event) {
 
@@ -118,8 +112,28 @@ public class EventController {
         return true;
     }
 
+    @MutationMapping
+    public boolean eventDelete(@Argument Long eventId){
+        eventService.delete(eventId);
+        return true;
+    }
+
+    @MutationMapping
+    public boolean eventEdit(@Argument Event event){
+
+        Event renamedEvent = eventService.load(event.getId());
+        renamedEvent.setTitle(event.getTitle());
+        renamedEvent.setDescription(event.getDescription());
+        eventService.update(renamedEvent);
+
+        return true;
+    }
 
 
+    @QueryMapping
+    public List<Event> eventGetUpcomingEventListByUser(@Argument Long userId, @Argument int total) {
+        return eventService.getUpcomingEventsByUserId(userId, total);
+    }
 
 
 }

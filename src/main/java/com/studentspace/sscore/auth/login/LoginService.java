@@ -20,11 +20,11 @@ public class LoginService {
     private PasswordEncryption passwordEncryption;
 
     @Transactional
-    public User getUserByUsernameAndPassword(String username, String password) {
+    public User getUserByUsernameAndPassword(String identifier, String password) {
         try {
             Session currentSession = entityManager.unwrap(Session.class);
-            Query<User> query = currentSession.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
-                    .setParameter("username", username);
+            Query<User> query = currentSession.createQuery("SELECT u FROM User u WHERE u.username = :identifier OR u.email = :identifier", User.class)
+                    .setParameter("identifier", identifier);
 
             User user = query.getSingleResult();
 
@@ -40,11 +40,11 @@ public class LoginService {
     }
 
     @Transactional
-    public User getUserByUsername(String username) {
+    public User getUserByUsername(String identifier) {
 
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<User> query = currentSession.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
-                .setParameter("username", username);
+        Query<User> query = currentSession.createQuery("SELECT u FROM User u WHERE u.username = :identifier  OR u.email = :identifier", User.class)
+                .setParameter("identifier", identifier);
 
         return query.getSingleResult();
 

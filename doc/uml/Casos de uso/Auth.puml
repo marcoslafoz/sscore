@@ -1,0 +1,13 @@
+@startuml
+
+actor Usuario
+
+rectangle "Sistema de Autenticación" {
+    usecase "Iniciar Sesión" as UC_IniciarSesion
+    usecase "Registrar" as UC_Registrar
+}
+
+Usuario --> UC_IniciarSesion
+Usuario --> UC_Registrar
+
+@enduml

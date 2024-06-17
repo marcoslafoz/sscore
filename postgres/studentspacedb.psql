@@ -1,16 +1,16 @@
-CREATE DATABASE studentspacedb
-    WITH
-    OWNER = postgres
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'Spanish_Spain.1252'
-    LC_CTYPE = 'Spanish_Spain.1252'
-    LOCALE_PROVIDER = 'libc'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1
-    IS_TEMPLATE = False;
+-- public.avatar definition
 
+-- Drop table
 
-CREATE SCHEMA public AUTHORIZATION pg_database_owner;
+-- DROP TABLE public.avatar;
+
+CREATE TABLE public.avatar (
+	id serial4 NOT NULL,
+	url varchar NOT NULL,
+	title varchar(100) NOT NULL,
+	CONSTRAINT avatar_pkey PRIMARY KEY (id)
+);
+
 
 -- public."user" definition
 
@@ -25,7 +25,10 @@ CREATE TABLE public."user" (
 	surname varchar(100) DEFAULT NULL::character varying NULL,
 	email varchar(100) DEFAULT NULL::character varying NOT NULL,
 	"password" varchar(100) NOT NULL,
-	CONSTRAINT user_pkey PRIMARY KEY (id)
+	id_avatar int4 NULL,
+	birthday date NULL,
+	CONSTRAINT user_pkey PRIMARY KEY (id),
+	CONSTRAINT fk_user_avatar FOREIGN KEY (id_avatar) REFERENCES public.avatar(id)
 );
 
 
@@ -45,24 +48,6 @@ CREATE TABLE public.course (
 );
 
 
--- public."document" definition
-
--- Drop table
-
--- DROP TABLE public."document";
-
-CREATE TABLE public."document" (
-	id serial4 NOT NULL,
-	user_id int4 NOT NULL,
-	course_id int4 NULL,
-	title varchar NOT NULL,
-	body varchar NULL,
-	CONSTRAINT document_pkey PRIMARY KEY (id),
-	CONSTRAINT document_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.course(id),
-	CONSTRAINT document_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
-);
-
-
 -- public.subject definition
 
 -- Drop table
@@ -76,7 +61,7 @@ CREATE TABLE public.subject (
 	color varchar(10) NULL,
 	user_id int4 NOT NULL,
 	CONSTRAINT subject_pkey PRIMARY KEY (id),
-	CONSTRAINT subject_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.course(id),
+	CONSTRAINT subject_academic_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.course(id) ON DELETE SET NULL,
 	CONSTRAINT subject_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
 );
 
@@ -95,7 +80,76 @@ CREATE TABLE public.task (
 	checked bool DEFAULT false NULL,
 	course_id int4 NULL,
 	"date" timestamptz NULL,
+	subject_id int4 NULL,
 	CONSTRAINT task_pkey PRIMARY KEY (id),
-	CONSTRAINT task_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.course(id),
+	CONSTRAINT task_academic_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.course(id) ON DELETE SET NULL,
+	CONSTRAINT task_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id) ON DELETE SET NULL,
 	CONSTRAINT task_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
+);
+
+
+-- public."document" definition
+
+-- Drop table
+
+-- DROP TABLE public."document";
+
+CREATE TABLE public."document" (
+	id serial4 NOT NULL,
+	user_id int4 NOT NULL,
+	course_id int4 NULL,
+	title varchar NOT NULL,
+	body varchar NULL,
+	subject_id int4 NULL,
+	CONSTRAINT document_pkey PRIMARY KEY (id),
+	CONSTRAINT document_academic_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.course(id) ON DELETE SET NULL,
+	CONSTRAINT document_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id) ON DELETE SET NULL,
+	CONSTRAINT document_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
+);
+
+
+-- public."event" definition
+
+-- Drop table
+
+-- DROP TABLE public."event";
+
+CREATE TABLE public."event" (
+	id serial4 NOT NULL,
+	user_id int4 NOT NULL,
+	title varchar NOT NULL,
+	description varchar NULL,
+	all_day bool DEFAULT true NULL,
+	course_id int4 NULL,
+	start_date timestamptz NULL,
+	end_date timestamptz NULL,
+	subject_id int4 NULL,
+	color varchar DEFAULT '#3788d8'::character varying NULL,
+	CONSTRAINT event_pkey PRIMARY KEY (id),
+	CONSTRAINT event_academic_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.course(id) ON DELETE SET NULL,
+	CONSTRAINT event_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id) ON DELETE SET NULL,
+	CONSTRAINT event_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
+);
+
+
+-- public.score definition
+
+-- Drop table
+
+-- DROP TABLE public.score;
+
+CREATE TABLE public.score (
+	id serial4 NOT NULL,
+	user_id int4 NOT NULL,
+	"name" varchar NOT NULL,
+	subject_id int4 NULL,
+	score float4 NULL,
+	"date" timestamptz NULL,
+	status int4 NULL,
+	course_id int4 NULL,
+	color varchar NULL,
+	CONSTRAINT score_pkey PRIMARY KEY (id),
+	CONSTRAINT score_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.course(id) ON DELETE SET NULL,
+	CONSTRAINT score_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id) ON DELETE SET NULL,
+	CONSTRAINT score_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
 );

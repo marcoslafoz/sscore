@@ -1,11 +1,7 @@
 package com.studentspace.sscore.domain.course;
 
-import com.studentspace.sscore.common.ObjectType;
-import com.studentspace.sscore.domain.document.Document;
 import com.studentspace.sscore.domain.document.DocumentService;
-import com.studentspace.sscore.domain.subject.Subject;
 import com.studentspace.sscore.domain.subject.SubjectService;
-import com.studentspace.sscore.domain.task.Task;
 import com.studentspace.sscore.domain.task.TaskService;
 import com.studentspace.sscore.domain.user.User;
 import com.studentspace.sscore.domain.user.UserService;
@@ -67,7 +63,7 @@ public class CourseController {
     @MutationMapping
     public boolean courseAdd(@Argument Long userId, @Argument Course course){
         Course newCourse = new Course();
-        User user = userService.getUserById(userId);
+        User user = userService.load(userId);
 
         if(user == null) throw new GraphQLException();
 

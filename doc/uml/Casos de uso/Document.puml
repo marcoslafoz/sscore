@@ -1,0 +1,30 @@
+@startuml
+actor Usuario
+
+
+rectangle "Gestión de Documentos" {
+    Usuario --> (Gestión de documentos personales)
+    (Gestión de documentos personales) --> (Crear Documento)
+    (Gestión de documentos personales) --> (Editar Documento)
+}
+
+rectangle "Crear Documento" {
+    (Acceder a lista de Documentos) --> (Crear nuevo documento)
+    (Crear nuevo documento) --> (Rellenar nuevo nombre)
+    (Rellenar nuevo nombre) --> (Guardar cambios)
+}
+
+rectangle "Editar Documento" {
+
+    (Acceder a documento) --> (Seleccionar opción de Editar)
+    (Seleccionar opción de Editar) --> (Editar Detalles)
+    (Editar Detalles) --> (Cambios Automáticos)
+}
+
+rectangle "Eliminar Documento" {
+
+    (Acceder a documento) --> (Seleccionar opción de Eliminar)
+    (Seleccionar opción de Eliminar) --> (Confirmar Eliminación)
+}
+
+@enduml

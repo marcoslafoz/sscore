@@ -33,25 +33,12 @@ public class UserService {
     }
 
     @Transactional
-    public void create(User user) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.persist(user);
-    }
-
-    @Transactional
     public void delete(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
         Task userToDelete = currentSession.get(Task.class, id);
         if (userToDelete != null) {
             currentSession.remove(userToDelete);
         }
-    }
-
-
-    @Transactional
-    public User getUserById(Long id) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        return currentSession.find(User.class, id);
     }
 
     @Transactional
@@ -74,7 +61,7 @@ public class UserService {
         if (existingUser == null || existingUser.getId().equals(user.getId())) {
             String encryptedPassword = passwordEncryption.encryptPassword(user.getPassword());
             user.setPassword(encryptedPassword);
-            currentSession.saveOrUpdate(user);
+            currentSession.persist(user);
             return true;
         }
 
@@ -92,6 +79,13 @@ public class UserService {
         } catch (NoResultException e) {
             return Optional.empty();
         }
+    }
+
+    @Transactional
+    public List<Avatar> getAvatarList() {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<Avatar> query = currentSession.createQuery("SELECT a FROM Avatar a ORDER BY a.title ASC", Avatar.class);
+        return query.getResultList();
     }
 
 }

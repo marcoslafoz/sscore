@@ -2,6 +2,7 @@ package com.studentspace.sscore.auth.login;
 
 import com.studentspace.sscore.security.JwtService;
 import com.studentspace.sscore.domain.user.User;
+import graphql.GraphQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -30,7 +31,10 @@ public class LoginController {
     @QueryMapping
     public boolean loginFindUsername(@Argument String username){
         User user = userLoginService.getUserByUsername(username);
-        return Objects.equals(user.getUsername(), username);
+
+        if(user != null ) return true;
+
+        throw new GraphQLException();
     }
 
 }

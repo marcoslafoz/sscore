@@ -4,12 +4,14 @@ type Query {
     login(username: String, password: String): String
 
     userRead(userId: ID): UserDto
+    avatarGetList: [AvatarDto]
 
     documentRead(documentId: ID, userId: ID): DocumentDto
     documentGetListByUser(userId: ID): [DocumentDto]
 
     taskGetListByUser(userId: ID): [TaskDto]
     taskGetListByCourse(courseId: ID): [TaskDto]
+    taskGetPendingListByUser(userId: ID): [TaskDto]
 
     courseGetListByUser(userId: ID): [CourseDto]
     courseRead(courseId: ID, userId: ID): CourseDto
@@ -20,10 +22,14 @@ type Query {
     scoreGetListByUser(userId: ID): [ScoreDto]
 
     eventGetListByUser(userId: ID): [EventDto]
+    eventGetUpcomingEventListByUser(userId: ID, total: Int): [EventDto]
 }
 
 type Mutation {
-    userCreate(user: InputUserDto): UserDto
+    userCreate(user: InputUserDto): String
+    userEdit(user: InputUserDto): Boolean
+    userChangePassword(userId: ID, password: String): Boolean
+    userChangeAvatar(userId: ID, avatarId: ID): Boolean
 
     documentEditBody(documentId: ID, body: String): Boolean
     documentDelete(documentId: ID): Boolean
@@ -50,6 +56,8 @@ type Mutation {
 
     eventAdd(userId: ID, event: InputEventDto): Boolean
     eventChange(event: InputEventDto): Boolean
+    eventDelete(eventId: ID): Boolean
+    eventEdit(event: InputEventDto): Boolean
 }
 
 type UserDto {
@@ -58,6 +66,14 @@ type UserDto {
     name: String
     surname: String
     email: String
+    avatar: AvatarDto
+    birthday: String
+}
+
+type AvatarDto {
+    id: ID
+    url: String
+    title: String
 }
 
 input InputUserDto {
@@ -66,6 +82,8 @@ input InputUserDto {
     surname: String
     email: String
     password: String
+    birthday: String
+    id: ID
 }
 
 type CourseDto {

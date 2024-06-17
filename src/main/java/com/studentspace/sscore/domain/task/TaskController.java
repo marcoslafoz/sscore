@@ -44,6 +44,11 @@ public class TaskController {
     }
 
     @QueryMapping
+    public List<Task> taskGetPendingListByUser(@Argument Long userId) {
+        return taskService.getPendingTasksByUserId(userId);
+    }
+
+    @QueryMapping
     public List<Task> taskGetListByCourse(@Argument Long courseId) {
         return taskService.getTasksByCourseId(courseId);
     }
@@ -82,7 +87,24 @@ public class TaskController {
             }
         }
 
-        if (task.getCourse().getId() != null) newTask.setCourse(courseService.load(task.getCourse().getId()));
+        if (task.getCourse().getId() != null && task.getCourse().getId() != 0) {
+            Course course = courseService.load(task.getCourse().getId());
+            newTask.setCourse(course);
+
+            if (task.getSubject().getId() != null && task.getSubject().getId() != 0) {
+                Subject subject = subjectService.load(task.getSubject().getId());
+                if (!Objects.equals(subject.getCourse().getId(), course.getId())) {
+                    subject = null;
+                }
+                newTask.setSubject(subject);
+            }else{
+                newTask.setSubject(null);
+            }
+
+        }else{
+            newTask.setCourse(null);
+            newTask.setSubject(null);
+        }
 
         taskService.create(newTask);
 
@@ -106,7 +128,25 @@ public class TaskController {
             updatedTask.setDate(null);
         }
 
-        if (task.getCourse().getId() != null) updatedTask.setCourse(courseService.load(task.getCourse().getId()));
+        if (task.getCourse().getId() != null && task.getCourse().getId() != 0) {
+            Course course = courseService.load(task.getCourse().getId());
+            updatedTask.setCourse(course);
+
+            if (task.getSubject().getId() != null && task.getSubject().getId() != 0) {
+                Subject subject = subjectService.load(task.getSubject().getId());
+                if (!Objects.equals(subject.getCourse().getId(), course.getId())) {
+                    subject = null;
+                }
+                updatedTask.setSubject(subject);
+            }else{
+                updatedTask.setSubject(null);
+            }
+
+        }else{
+            updatedTask.setCourse(null);
+            updatedTask.setSubject(null);
+        }
+
 
         taskService.update(updatedTask);
         return true;

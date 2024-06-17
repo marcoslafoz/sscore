@@ -51,6 +51,16 @@ public class EventService {
         return query.getResultList();
     }
 
+    @Transactional
+    public List<Event> getUpcomingEventsByUserId(Long userId, int total) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<Event> query = currentSession.createQuery("SELECT e FROM Event e WHERE e.user.id = :userId "
+                + "ORDER BY e.start ASC", Event.class);
+        query.setParameter("userId", userId);
+        query.setMaxResults(total);
+        return query.getResultList();
+    }
+
 
 
 }

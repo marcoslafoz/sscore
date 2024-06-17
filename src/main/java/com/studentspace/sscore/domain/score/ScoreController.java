@@ -1,5 +1,6 @@
 package com.studentspace.sscore.domain.score;
 
+import com.studentspace.sscore.domain.course.Course;
 import com.studentspace.sscore.domain.course.CourseService;
 import com.studentspace.sscore.domain.document.Document;
 import com.studentspace.sscore.domain.subject.Subject;
@@ -78,15 +79,23 @@ public class ScoreController {
             }
         }
 
-        if (score.getCourse() != null && score.getCourse().getId() != null) {
-            newScore.setCourse(courseService.load(score.getCourse().getId()));
+        if (score.getCourse().getId() != null && score.getCourse().getId() != 0) {
+            Course course = courseService.load(score.getCourse().getId());
+            newScore.setCourse(course);
 
-            if (score.getSubject() != null && score.getSubject().getId() != null) {
+            if (score.getSubject().getId() != null && score.getSubject().getId() != 0) {
                 Subject subject = subjectService.load(score.getSubject().getId());
-                if (Objects.equals(subject.getCourse().getId(), score.getCourse().getId())) {
-                    newScore.setSubject(subject);
+                if (!Objects.equals(subject.getCourse().getId(), course.getId())) {
+                    subject = null;
                 }
+                newScore.setSubject(subject);
+            }else{
+                newScore.setSubject(null);
             }
+
+        }else{
+            newScore.setCourse(null);
+            newScore.setSubject(null);
         }
 
         scoreService.create(newScore);
@@ -98,35 +107,43 @@ public class ScoreController {
     public boolean scoreEdit(@Argument Score score) {
 
 
-        Score newScore = scoreService.load(score.getId());
+        Score editedScore = scoreService.load(score.getId());
 
-        newScore.setName(score.getName());
-        newScore.setScore(score.getScore());
-        newScore.setStatus(score.getStatus());
+        editedScore.setName(score.getName());
+        editedScore.setScore(score.getScore());
+        editedScore.setStatus(score.getStatus());
 
         if (score.getDate() != null) {
             try {
                 ZonedDateTime zonedDateTime = ZonedDateTime.parse(score.getDate().toString(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-                newScore.setDate(zonedDateTime);
+                editedScore.setDate(zonedDateTime);
             } catch (DateTimeParseException e) {
                 return false;
             }
         }else{
-            newScore.setDate(null);
+            editedScore.setDate(null);
         }
 
-        if (score.getCourse() != null && score.getCourse().getId() != null) {
-            newScore.setCourse(courseService.load(score.getCourse().getId()));
+        if (score.getCourse().getId() != null && score.getCourse().getId() != 0) {
+            Course course = courseService.load(score.getCourse().getId());
+            editedScore.setCourse(course);
 
-            if (score.getSubject() != null && score.getSubject().getId() != null) {
+            if (score.getSubject().getId() != null && score.getSubject().getId() != 0) {
                 Subject subject = subjectService.load(score.getSubject().getId());
-                if (Objects.equals(subject.getCourse().getId(), score.getCourse().getId())) {
-                    newScore.setSubject(subject);
+                if (!Objects.equals(subject.getCourse().getId(), course.getId())) {
+                    subject = null;
                 }
+                editedScore.setSubject(subject);
+            }else{
+                editedScore.setSubject(null);
             }
+
+        }else{
+            editedScore.setCourse(null);
+            editedScore.setSubject(null);
         }
 
-        scoreService.create(newScore);
+        scoreService.create(editedScore);
 
         return true;
     }
