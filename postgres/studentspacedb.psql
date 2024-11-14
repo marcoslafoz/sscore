@@ -1,3 +1,18 @@
+-- Crear la base de datos studentspacedb si no existe
+DO
+$$
+BEGIN
+   IF NOT EXISTS (
+      SELECT FROM pg_database WHERE datname = 'studentspacedb'
+   ) THEN
+      PERFORM dblink_exec('dbname=postgres', 'CREATE DATABASE studentspacedb');
+   END IF;
+END
+$$ LANGUAGE plpgsql;
+
+-- Usar la base de datos studentspacedb
+\c studentspacedb
+
 -- public.avatar definition
 
 -- Drop table
