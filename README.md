@@ -13,7 +13,7 @@
 Before running the project, make sure you have the following installed:
 
 - **PostgreSQL**: To manage the application's database.
-- **Java SDK 23**: Required for running the Java-based development environment.
+- **Java SDK 21**: Required for running the Java-based development environment.
 
 ## Initial Setup
 
