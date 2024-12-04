@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # Db
+  studentspacedb:
+    image: postgres:17
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: studentspacedb
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d studentspacedb"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - ./sscore/postgres/:/docker-entrypoint-initdb.d/
+
+  # Backend
+  sscore:
+    build: ./sscore
+    mem_limit: 3000m
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://studentspacedb:5432/studentspacedb
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      SECRET_ENCRYPTION_WORD: ${SECRET_ENCRYPTION_WORD}
+      SECURITY_ENCRYPTION_WORD: ${SECURITY_ENCRYPTION_WORD}
+    restart: always
+    depends_on:
+      studentspacedb:
+        condition: service_healthy
