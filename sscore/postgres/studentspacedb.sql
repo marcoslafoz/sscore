@@ -1,11 +1,4 @@
--- Usar la base de datos studentspacedb
 \c studentspacedb
-
--- public.avatar definition
-
--- Drop table
-
--- DROP TABLE public.avatar;
 
 CREATE TABLE public.avatar (
 	id serial4 NOT NULL,
@@ -13,13 +6,6 @@ CREATE TABLE public.avatar (
 	title varchar(100) NOT NULL,
 	CONSTRAINT avatar_pkey PRIMARY KEY (id)
 );
-
-
--- public."user" definition
-
--- Drop table
-
--- DROP TABLE public."user";
 
 CREATE TABLE public."user" (
 	id serial4 NOT NULL,
@@ -34,13 +20,6 @@ CREATE TABLE public."user" (
 	CONSTRAINT fk_user_avatar FOREIGN KEY (id_avatar) REFERENCES public.avatar(id)
 );
 
-
--- public.course definition
-
--- Drop table
-
--- DROP TABLE public.course;
-
 CREATE TABLE public.course (
 	id serial4 NOT NULL,
 	"name" varchar(255) NOT NULL,
@@ -49,13 +28,6 @@ CREATE TABLE public.course (
 	CONSTRAINT course_pkey PRIMARY KEY (id),
 	CONSTRAINT course_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
 );
-
-
--- public.subject definition
-
--- Drop table
-
--- DROP TABLE public.subject;
 
 CREATE TABLE public.subject (
 	id serial4 NOT NULL,
@@ -67,13 +39,6 @@ CREATE TABLE public.subject (
 	CONSTRAINT subject_academic_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.course(id) ON DELETE SET NULL,
 	CONSTRAINT subject_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
 );
-
-
--- public.task definition
-
--- Drop table
-
--- DROP TABLE public.task;
 
 CREATE TABLE public.task (
 	id serial4 NOT NULL,
@@ -90,13 +55,6 @@ CREATE TABLE public.task (
 	CONSTRAINT task_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
 );
 
-
--- public."document" definition
-
--- Drop table
-
--- DROP TABLE public."document";
-
 CREATE TABLE public."document" (
 	id serial4 NOT NULL,
 	user_id int4 NOT NULL,
@@ -109,13 +67,6 @@ CREATE TABLE public."document" (
 	CONSTRAINT document_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id) ON DELETE SET NULL,
 	CONSTRAINT document_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
 );
-
-
--- public."event" definition
-
--- Drop table
-
--- DROP TABLE public."event";
 
 CREATE TABLE public."event" (
 	id serial4 NOT NULL,
@@ -134,13 +85,6 @@ CREATE TABLE public."event" (
 	CONSTRAINT event_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
 );
 
-
--- public.score definition
-
--- Drop table
-
--- DROP TABLE public.score;
-
 CREATE TABLE public.score (
 	id serial4 NOT NULL,
 	user_id int4 NOT NULL,
@@ -156,3 +100,12 @@ CREATE TABLE public.score (
 	CONSTRAINT score_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES public.subject(id) ON DELETE SET NULL,
 	CONSTRAINT score_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id)
 );
+
+INSERT INTO public.avatar (id, url, title) VALUES(2, 'https://i.imgur.com/ojRTBSc.jpg', 'Axia');
+INSERT INTO public.avatar (id, url, title) VALUES(6, 'https://i.imgur.com/NviZCL7.jpg', 'Leo');
+INSERT INTO public.avatar (id, url, title) VALUES(3, 'https://i.imgur.com/hucpDF2.jpg', 'Camila');
+INSERT INTO public.avatar (id, url, title) VALUES(5, 'https://i.imgur.com/A4TI4vD.jpg', 'Tom');
+INSERT INTO public.avatar (id, url, title) VALUES(8, 'https://i.imgur.com/pKgQpDi.jpg', 'Axel');
+INSERT INTO public.avatar (id, url, title) VALUES(7, 'https://i.imgur.com/WbuxCEL.jpg', 'Marcos');
+INSERT INTO public.avatar (id, url, title) VALUES(1, 'https://i.imgur.com/BWuG51z.jpg', 'Aran');
+INSERT INTO public.avatar (id, url, title) VALUES(4, 'https://i.imgur.com/v18m7Nx.jpg', 'Noah');
