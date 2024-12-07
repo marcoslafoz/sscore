@@ -1,0 +1,12 @@
+services:
+  sscore:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: ${DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      SECRET_ENCRYPTION_WORD: ${SECRET_ENCRYPTION_WORD}
+      SECURITY_ENCRYPTION_WORD: ${SECURITY_ENCRYPTION_WORD}
