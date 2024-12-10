@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -54,9 +55,12 @@ public class EventService {
     @Transactional
     public List<Event> getUpcomingEventsByUserId(Long userId, int total) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Event> query = currentSession.createQuery("SELECT e FROM Event e WHERE e.user.id = :userId "
-                + "ORDER BY e.start ASC", Event.class);
+        Query<Event> query = currentSession.createQuery(
+                "SELECT e FROM Event e WHERE e.user.id = :userId " +
+                        "AND e.start >= :currentDate ORDER BY e.start ASC", Event.class
+        );
         query.setParameter("userId", userId);
+        query.setParameter("currentDate", ZonedDateTime.now());
         query.setMaxResults(total);
         return query.getResultList();
     }
